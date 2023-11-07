@@ -2,6 +2,8 @@ import {
   getAllPatientsService,
   getPatientByIdService,
   createPatientService,
+  updatePatientService,
+  deletePatientService,
 } from "../services/patientService.js";
 
 export const getAllPatients = async (req, res) => {
@@ -23,7 +25,7 @@ export const getPatientById = async (req, res) => {
   res.send({ status: 200, data: patient });
 };
 
-export const createPatient = async (req, res) => {
+export const createPatient = (req, res) => {
   const { body } = req;
 
   if (
@@ -50,12 +52,19 @@ export const createPatient = async (req, res) => {
     phone_number: body.phone_number,
   };
 
-  const patient = await createPatientService(newPatient);
+  const patient = createPatientService(newPatient);
   res.status(201).send({ status: 201, data: patient });
 };
 
 export const updatePatient = async (req, res) => {
-  const { body } = req;
+  const {
+    body,
+    params: { patient_id },
+  } = req;
+
+  if (!patient_id) {
+    return;
+  }
 
   if (
     !body.first_name &&
@@ -69,25 +78,19 @@ export const updatePatient = async (req, res) => {
     return res.status(400).send({ message: "Missing information in body" });
   }
 
-  const updatedPatient = {
-    first_name: body.first_name,
-    last_name: body.last_name,
-    date_of_birth: body.date_of_birth,
-    email: body.email,
-    country: body.country,
-    postal_code: body.postal_code,
-    phone_number: body.phone_number,
-  };
-
-  // const patient = await PatientService.updatePatient(
-  //   req.params.patient_id,
-  //   updatedPatient
-  // );
-
-  // res.send({ status: 200, data: patient });
+  const updatedPatient = updatePatientService(patient_id, body);
+  res.send({ status: 200, data: updatedPatient });
 };
 
-export const deletePatient = async (req, res) => {
-  // const patient = await PatientService.deletePatient(req.params.patient_id);
-  // res.send({ status: 200, data: patient });
+export const deletePatient = (req, res) => {
+  const {
+    params: { patient_id },
+  } = req;
+
+  if (!patient_id) {
+    return;
+  }
+
+  deletePatientService(patient_id);
+  res.status(204).send({ status: "OK", message: "Patient deleted" });
 };
