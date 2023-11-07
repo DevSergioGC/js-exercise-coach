@@ -12,5 +12,5 @@ fixInput = input.filter((person) => person.age < 25);
 console.log(
   `\nCantidad de personas menores a 25 años: ${
     fixInput.length
-  }\n\n${fixInput.map((person) => (`${person.name} --> ${person.age} años\n`))}`
+  }\n\n${fixInput.map((person) => (`${person.name} --> ${person.age} años`)).join("\n")}`
 );
