@@ -13,5 +13,5 @@ let input = [
   "Sophie",
 ];
 
-fixInput = input.filter((value, index) => input.indexOf(value) === index);
+let fixInput = input.filter((value, index) => input.indexOf(value) === index);
 console.log(fixInput);
