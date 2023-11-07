@@ -1,5 +1,8 @@
-const express = require("express");
-const PacientsRoutes = require("./routes/pacientsRoutes");
+import express from "express";
+import PacientsRoutes from "./src/routes/pacientsRoutes.js";
+
+// const express = require("express");
+// const PacientsRoutes = require("./src/routes/pacientsRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;

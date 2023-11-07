@@ -1,18 +1,29 @@
-const patientService = require("../services/patientService");
+import {
+  getAllPatientsService,
+  getPatientByIdService,
+  createPatientService,
+} from "../services/patientService.js";
 
-const getAllPatients = async (_req, res) => {
-  const patients = await patientService.getAllPatients();
+export const getAllPatients = async (req, res) => {
+  const patients = await getAllPatientsService();
 
   res.send({ status: 200, data: patients });
 };
 
-const getPatientById = async (req, res) => {
-  const patient = await patientService.getPatientById(req.params.patient_id);
+export const getPatientById = async (req, res) => {
+  const {
+    params: { patient_id },
+  } = req;
 
+  if (!patient_id) {
+    return;
+  }
+
+  const patient = await getPatientByIdService(patient_id);
   res.send({ status: 200, data: patient });
 };
 
-const createPatient = async (req, res) => {
+export const createPatient = async (req, res) => {
   const { body } = req;
 
   if (
@@ -39,11 +50,11 @@ const createPatient = async (req, res) => {
     phone_number: body.phone_number,
   };
 
-  const patient = await patientService.createPatient(newPatient);
+  const patient = await createPatientService(newPatient);
   res.status(201).send({ status: 201, data: patient });
 };
 
-const updatePatient = async (req, res) => {
+export const updatePatient = async (req, res) => {
   const { body } = req;
 
   if (
@@ -68,16 +79,15 @@ const updatePatient = async (req, res) => {
     phone_number: body.phone_number,
   };
 
-  const patient = await patientService.updatePatient(
-    req.params.patient_id,
-    updatedPatient
-  );
+  // const patient = await PatientService.updatePatient(
+  //   req.params.patient_id,
+  //   updatedPatient
+  // );
 
-  res.send({ status: 200, data: patient });
+  // res.send({ status: 200, data: patient });
 };
 
-const deletePatient = async (req, res) => {
-  const patient = await patientService.deletePatient(req.params.patient_id);
-
-  res.send({ status: 200, data: patient });
+export const deletePatient = async (req, res) => {
+  // const patient = await PatientService.deletePatient(req.params.patient_id);
+  // res.send({ status: 200, data: patient });
 };

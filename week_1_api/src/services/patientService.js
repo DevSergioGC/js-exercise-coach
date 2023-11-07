@@ -1,21 +1,23 @@
-const Patient = require("../database/Patient");
+import {
+  getAllPatientsDB,
+  getPatientByIdDB,
+  createNewPatientDB,
+} from "../database/Patient.js";
 
-const getAllPatients = async () => {
-  const patients = await Patient.getAllPatients();
+export const getAllPatientsService = async () => {
+  const patients = await getAllPatientsDB();
 
   return patients;
 };
 
-const getPatientById = async (id) => {
-  const patient = await Patient.findByPk(id);
-
-  if (!patient) return null;
-
+export const getPatientByIdService = async (id) => {
+  const patient = getPatientByIdDB(id);
+  console.log("🚀 ~ file: patientService.js:15 ~ getPatientByIdService ~ patient:", patient)
   return patient;
 };
 
-const createPatient = async (newPatient) => {
-  const patient = await Patient.create(newPatient);
+export const createPatientService = async (newPatient) => {
+  const patient = await createNewPatientDB(newPatient);
 
   return patient;
 };

@@ -1,12 +1,21 @@
-const express = require("express");
+import express from "express";
+import {
+  getAllPatients,
+  getPatientById,
+  createPatient,
+  updatePatient,
+  deletePatient,
+} from "../controllers/pacientsController.js";
+
+// const PacientsController = require("../controllers/pacientsController");
+
 const router = express.Router();
-const PacientsController = require("../controllers/pacientsController");
 
 router
-    .get("/", PacientsController.getAllPacients)
-    .get("/:patient_id", PacientsController.getPacientById)
-    .post("/", PacientsController.createPacient)
-    .put("/:patient_id", PacientsController.updatePacient)
-    .delete("/:patient_id", PacientsController.deletePacient);
+  .get("/", getAllPatients)
+  .get("/:patient_id", getPatientById)
+  .post("/", createPatient)
+  .put("/:patient_id", updatePatient)
+  .delete("/:patient_id", deletePatient);
 
-module.exports = router;
+export default router;
